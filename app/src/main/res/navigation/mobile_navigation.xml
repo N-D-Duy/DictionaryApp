@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.dictionaryapp.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:name="com.example.dictionaryapp.ui.search.SearchFragment"
+        android:label="@string/title_search"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.dictionaryapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:name="com.example.dictionaryapp.ui.history.HistoryFragment"
+        android:label="@string/title_history"
         tools:layout="@layout/fragment_notifications" />
 </navigation>
