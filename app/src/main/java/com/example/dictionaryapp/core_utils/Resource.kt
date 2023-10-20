@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.utils
+package com.example.dictionaryapp.core_utils
 
 typealias SimpleResource = Resource<Unit>
 

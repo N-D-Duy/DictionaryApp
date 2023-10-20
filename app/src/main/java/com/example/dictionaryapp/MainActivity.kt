@@ -9,10 +9,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.dictionaryapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
