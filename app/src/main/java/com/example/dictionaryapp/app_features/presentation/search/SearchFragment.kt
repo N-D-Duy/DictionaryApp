@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.app_features.ui.history
+package com.example.dictionaryapp.app_features.presentation.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.dictionaryapp.databinding.FragmentHistoryBinding
+import com.example.dictionaryapp.databinding.FragmentSearchBinding
 
-class HistoryFragment : Fragment() {
+class SearchFragment : Fragment() {
 
-    private var _binding: FragmentHistoryBinding? = null
+    private var _binding: FragmentSearchBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +22,14 @@ class HistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val historyViewModel =
-            ViewModelProvider(this)[HistoryViewModel::class.java]
+        val searchViewModel =
+            ViewModelProvider(this).get(SearchViewModel::class.java)
 
-        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        historyViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textDashboard
+        searchViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.app_features.ui.home
+package com.example.dictionaryapp.app_features.presentation.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

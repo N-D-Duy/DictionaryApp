@@ -2,8 +2,8 @@ package com.example.dictionaryapp.app_features.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.dictionaryapp.app_features.model.Meaning
-import com.example.dictionaryapp.app_features.model.WordInfo
+import com.example.dictionaryapp.app_features.domain.model.Meaning
+import com.example.dictionaryapp.app_features.domain.model.WordInfo
 
 @Entity
 data class WordInfoEntity(

@@ -1,7 +1,7 @@
 package com.example.dictionaryapp.app_features.domain.use_case
 
 import com.example.dictionaryapp.app_features.domain.repository.WordInfoRepository
-import com.example.dictionaryapp.app_features.model.WordInfo
+import com.example.dictionaryapp.app_features.domain.model.WordInfo
 import com.example.dictionaryapp.core_utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.app_features.ui.search
+package com.example.dictionaryapp.app_features.presentation.history
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,12 +8,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
+class HistoryViewModel@Inject constructor(
     private val getWordInfo: GetWordInfo
 ) : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is search Fragment"
+        value = "This is history Fragment"
     }
     val text: LiveData<String> = _text
 }

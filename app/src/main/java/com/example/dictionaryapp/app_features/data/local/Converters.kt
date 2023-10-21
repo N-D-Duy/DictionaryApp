@@ -2,7 +2,7 @@ package com.example.dictionaryapp.app_features.data.local
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
-import com.example.dictionaryapp.app_features.model.Meaning
+import com.example.dictionaryapp.app_features.domain.model.Meaning
 import com.example.dictionaryapp.app_features.utils.JsonParser
 import com.google.gson.reflect.TypeToken
 

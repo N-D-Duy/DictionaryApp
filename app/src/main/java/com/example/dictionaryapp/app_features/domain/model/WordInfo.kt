@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.app_features.model
+package com.example.dictionaryapp.app_features.domain.model
 
 data class WordInfo(
     val word: String? = "",

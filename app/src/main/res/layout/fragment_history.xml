@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app_features.ui.history.HistoryFragment">
+    tools:context=".app_features.presentation.history.HistoryFragment">
 
     <TextView
         android:id="@+id/text_notifications"
