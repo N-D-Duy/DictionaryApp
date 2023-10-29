@@ -3,4 +3,10 @@
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_history">History</string>
+    <string name="word_origin">Crime</string>
+    <string name="phonetic">/kraim/</string>
+    <string name="show_keys">Hiển Thị Đáp Án</string>
+    <string name="meaning_quiz">Tội phạm, Tội ác, Tội lỗi, Tội phạm, Tội ác, Tội lỗi,. Tội phạm, Tội ác, Tội lỗi, Tội phạm, Tội ác, Tội lỗi,Tội phạm, Tội ác, Tội lỗi,Tội phạm, Tội ác, Tội lỗi</string>
+    <string name="forward_arrow_description">next</string>
+    <string name="back_arrow_description">previous</string>
 </resources>

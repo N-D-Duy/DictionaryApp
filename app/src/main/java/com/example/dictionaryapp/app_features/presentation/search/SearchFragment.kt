@@ -8,7 +8,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dictionaryapp.databinding.FragmentSearchBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
@@ -23,7 +25,7 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val searchViewModel =
-            ViewModelProvider(this).get(SearchViewModel::class.java)
+            ViewModelProvider(this)[SearchViewModel::class.java]
 
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root

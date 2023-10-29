@@ -7,10 +7,8 @@ import com.example.dictionaryapp.app_features.domain.use_case.GetWordInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel
-class SearchViewModel @Inject constructor(
-    private val getWordInfo: GetWordInfo
-) : ViewModel() {
+
+class SearchViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is search Fragment"

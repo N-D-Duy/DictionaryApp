@@ -19,7 +19,7 @@ data class WordInfoEntity(
     fun toWordInfo(): WordInfo {
         return WordInfo(
             meanings = meanings,
-            word = word,
+            word = word, 
             phonetic = phonetic,
             origin = origin,
             dismissDuration = dismissDuration,
