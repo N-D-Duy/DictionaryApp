@@ -1,7 +1,10 @@
 package com.example.dictionaryapp.app_features.utils
 
 enum class DismissDuration(val durationInMinutes: Long) {
+    ONE_MINUTE(1),
+    FIVE_MINUTES(5),
     TEN_MINUTES(10),
+    THIRTY_MINUTES(30),
     ONE_DAY(1440),
     THREE_DAYS(4320),
     FIVE_DAYS(7200),

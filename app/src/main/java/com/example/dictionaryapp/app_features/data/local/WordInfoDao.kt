@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.dictionaryapp.app_features.data.local.entity.WordInfoEntity
 
 @Dao
@@ -17,4 +18,10 @@ interface WordInfoDao {
 
     @Query("SELECT * FROM wordinfoentity WHERE word LIKE '%' || :word || '%'")
     suspend fun getWordInfos(word: String): List<WordInfoEntity>
+
+    @Query("SELECT * FROM wordinfoentity WHERE isUsed = 0 ORDER BY RANDOM() LIMIT 20")
+    fun fetchRandomUnusedWords(): List<WordInfoEntity>
+
+    @Update
+    fun updateWords(words: List<WordInfoEntity>)
 }

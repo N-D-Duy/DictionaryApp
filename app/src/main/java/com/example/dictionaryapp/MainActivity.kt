@@ -1,12 +1,9 @@
 package com.example.dictionaryapp
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.dictionaryapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
@@ -15,6 +12,7 @@ import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNa
 class MainActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityMainBinding
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,12 +23,13 @@ class MainActivity : AppCompatActivity(){
         val navView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        val appBarConfiguration = AppBarConfiguration(
+        /*val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home, R.id.navigation_search, R.id.navigation_history
             )
         )
-        /*setupActionBarWithNavController(navController, appBarConfiguration)*/
+        setupActionBarWithNavController(navController, appBarConfiguration)*/
         ExpandableBottomBarNavigationUI.setupWithNavController(navView, navController)
     }
+
 }
