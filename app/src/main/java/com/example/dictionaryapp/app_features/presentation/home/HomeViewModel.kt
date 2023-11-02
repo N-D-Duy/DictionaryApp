@@ -25,7 +25,7 @@ class HomeViewModel : ViewModel() {
 
         val word1 = WordInfo(word = "Crime", meanings = arrayListOf(mean1), dismissDuration = DismissDuration.FIVE_MINUTES)
         val word2 = WordInfo(word = "Book", meanings = arrayListOf(mean2), dismissDuration = DismissDuration.ONE_MINUTE)
-        val word3 = WordInfo(word = "Fly", meanings = arrayListOf(mean3), dismissDuration = DismissDuration.THIRTY_MINUTES)
+        val word3 = WordInfo(word = "FlyCar", meanings = arrayListOf(mean3), dismissDuration = DismissDuration.THIRTY_MINUTES)
         value = arrayListOf(word1, word2, word3)
     }
     val text: LiveData<List<WordInfo>> = _text

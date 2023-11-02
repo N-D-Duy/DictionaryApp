@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.example.dictionaryapp.app_features.data.local.Converters
 import com.example.dictionaryapp.app_features.data.local.WordInfoDatabase
+import com.example.dictionaryapp.app_features.data.local.entity.dao.HistoryDao
 import com.example.dictionaryapp.app_features.data.remote.DictionaryApi
 import com.example.dictionaryapp.app_features.data.repository.WordInfoRepositoryImpl
 import com.example.dictionaryapp.app_features.domain.repository.WordInfoRepository
@@ -31,10 +32,10 @@ object WordInfoModule {
     @Provides
     @Singleton
     fun provideWordInfoRepository(
-        db: WordInfoDatabase,
-        api: DictionaryApi
+        api: DictionaryApi,
+        dao: WordInfoDatabase,
     ): WordInfoRepository {
-        return WordInfoRepositoryImpl(api, db.dao)
+        return WordInfoRepositoryImpl(api, dao)
     }
 
     @Provides

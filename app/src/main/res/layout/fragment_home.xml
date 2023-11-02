@@ -153,67 +153,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:visibility="gone">
-
-
-            <Button
-                android:id="@+id/btn_opts_1"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_options"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_opts_2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="1m"
-                android:gravity="center"
-                android:backgroundTint="#FF5733"/>
-
-            <Button
-                android:id="@+id/btn_opts_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5m"
-                android:gravity="center"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_opts_1"
-                app:layout_constraintEnd_toStartOf="@id/btn_opts_3"
-                android:backgroundTint="#33FF57"/>
-
-            <Button
-                android:id="@+id/btn_opts_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_opts_4"
-                app:layout_constraintStart_toEndOf="@id/btn_opts_2"
-                android:text="10m"
-                android:gravity="center"
-                android:backgroundTint="#5733FF"/>
-
-            <Button
-                android:id="@+id/btn_opts_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_opts_5"
-                app:layout_constraintStart_toEndOf="@id/btn_opts_3"
-                android:text="30m"
-                android:gravity="center"
-                android:backgroundTint="#988B0D"/>
-
-            <Button
-                android:id="@+id/btn_opts_5"
-                android:layout_width="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/btn_opts_4"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:text="1h"
-                android:gravity="center"
-                android:backgroundTint="#FF33FF"/>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_options"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

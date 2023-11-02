@@ -5,16 +5,20 @@ import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dictionaryapp.MainViewModel
 import com.example.dictionaryapp.app_features.domain.model.WordInfo
 import com.example.dictionaryapp.app_features.utils.DismissDuration
+import com.example.dictionaryapp.app_features.utils.optionsupport.ConvertTime
+import com.example.dictionaryapp.app_features.utils.optionsupport.OptionsAdapter
 import com.example.dictionaryapp.core_utils.wordsconverter.WordsConverterImpl
 import com.example.dictionaryapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.reflect.typeOf
 
 
 @AndroidEntryPoint
@@ -23,7 +27,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val activityViewModel: MainViewModel by activityViewModels()
     private val converter = WordsConverterImpl.getInstance()
-    private var isHidden = true
+    private var isHiddenAnswer = true
+    private var isHiddenOptions = false
     private lateinit var hiddenWord: SpannableString
     private lateinit var showWord: SpannableString
     private val binding get() = _binding!!
@@ -32,12 +37,22 @@ class HomeFragment : Fragment() {
     private val btnShowKey get() =  binding.btnShowKey
     private val layoutOpts get() = binding.layoutOpts
     private val layoutAnswer get() = binding.layoutAnswer
-    private val btnOpts1 get() = binding.btnOpts1
-    private val btnOpts2 get() = binding.btnOpts2
-    private val btnOpts3 get() = binding.btnOpts3
-    private val btnOpts4 get() = binding.btnOpts4
-    private val btnOpts5 get() = binding.btnOpts5
-    private var list:List<WordInfo> = arrayListOf()
+    private val rcvOptions get() = binding.rcvOptions
+    private val items: List<DismissDuration> = arrayListOf(
+        DismissDuration.ONE_MINUTE,
+        DismissDuration.FIVE_MINUTES,
+        DismissDuration.TEN_MINUTES,
+        DismissDuration.THIRTY_MINUTES,
+        DismissDuration.ONE_DAY,
+        DismissDuration.THREE_DAYS,
+        DismissDuration.FIVE_DAYS,
+        DismissDuration.TEN_DAYS,
+        DismissDuration.ONE_MONTH,
+        DismissDuration.THREE_MONTHS,
+        DismissDuration.FIVE_MONTHS,
+        DismissDuration.ONE_YEAR
+    )
+    private var listWord:List<WordInfo> = arrayListOf()
     private var currentIndex = 0
     private lateinit var homeViewModel: HomeViewModel
 
@@ -53,8 +68,16 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
 
+        //set adapter
+        rcvOptions.layoutManager = LinearLayoutManager(requireContext().applicationContext, LinearLayoutManager.HORIZONTAL, false)
+        rcvOptions.hasFixedSize()
+
+        val mAdapter = OptionsAdapter(items)
+        rcvOptions.adapter = mAdapter
+
+        //create initial view
         homeViewModel.text.observe(viewLifecycleOwner) {
-            list = it
+            listWord = it
             val currentWordIndex = activityViewModel.currentWordIndex
             val res = converter.convertAndColor(it[currentWordIndex].word.toString())
             hiddenWord = res.first
@@ -63,6 +86,18 @@ class HomeFragment : Fragment() {
             meaning.text = it[currentWordIndex].meanings[0].definitions[0].definition.toString()
         }
 
+        mAdapter.setOnClickListener(object: OptionsAdapter.OnItemClickListener{
+            override fun onItemClick(position: Int) {
+                isHiddenOptions = true
+                listWord[currentIndex].dismissDuration = items[position]
+                layoutOpts.visibility = View.GONE
+                val time = ConvertTime(items[position].durationInMinutes).convertMinutesToTime()
+                Toast.makeText(context, "This word will not appear after $time", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
+        //set event
         onClickEvent()
 
         return root
@@ -73,29 +108,6 @@ class HomeFragment : Fragment() {
         onPreviousButton()
         onNextButton()
         onSoundButton()
-        onClickOptsItem()
-    }
-
-    private fun onClickOptsItem() {
-        btnOpts1.setOnClickListener {
-            handleButtonClick(btnOpts1, btnOpts2, btnOpts3, btnOpts4, btnOpts5)
-        }
-
-        btnOpts2.setOnClickListener {
-            handleButtonClick(btnOpts2, btnOpts1, btnOpts3, btnOpts4, btnOpts5)
-        }
-
-        btnOpts3.setOnClickListener {
-            handleButtonClick(btnOpts3, btnOpts2, btnOpts1, btnOpts4, btnOpts5)
-        }
-
-        btnOpts4.setOnClickListener {
-            handleButtonClick(btnOpts4, btnOpts2, btnOpts3, btnOpts1, btnOpts5)
-        }
-
-        btnOpts5.setOnClickListener {
-            handleButtonClick(btnOpts5, btnOpts2, btnOpts3, btnOpts4, btnOpts1)
-        }
     }
 
     private fun onSoundButton() {
@@ -106,7 +118,7 @@ class HomeFragment : Fragment() {
 
     private fun onNextButton() {
         binding.btnForward.setOnClickListener {
-            if(currentIndex < list.size-1){
+            if(currentIndex < listWord.size-1){
                 layoutAnswer.visibility = View.GONE
                 updateUI(currentIndex + 1)
                 currentIndex++
@@ -117,46 +129,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateUI(index: Int) {
-        val res = converter.convertAndColor(list[index].word.toString())
-        val wordObj = list[index]
+        val res = converter.convertAndColor(listWord[index].word.toString())
         hiddenWord = res.first
-        showWord = converter.revealHiddenChars(res.first, list[index].word.toString(), res.second)
+        showWord = converter.revealHiddenChars(res.first, listWord[index].word.toString(), res.second)
         word.text = hiddenWord
-        meaning.text = list[index].meanings[0].definitions[0].definition.toString()
-
-        //Check the options the user has selected (1m, 5m, etc....) and disable button
-        val actions: Map<DismissDuration, () -> Unit> = mapOf(
-            DismissDuration.ONE_MINUTE to {
-
-            },
-            DismissDuration.FIVE_MINUTES to {
-
-            },
-            DismissDuration.TEN_MINUTES to {
-
-            },
-
-            DismissDuration.THIRTY_MINUTES to {
-
-            },
-
-            DismissDuration.ONE_DAY to{
-
-            },
-
-            DismissDuration.THREE_DAYS to{
-
-            },
-
-            DismissDuration.FIVE_DAYS to{
-
-            },
-
-            DismissDuration.TEN_DAYS to{
-
-            }
-        )
-        actions[wordObj.dismissDuration]?.invoke()
+        meaning.text = listWord[index].meanings[0].definitions[0].definition.toString()
     }
 
     private fun onPreviousButton() {
@@ -172,40 +149,36 @@ class HomeFragment : Fragment() {
     }
 
     private fun resetState() {
-        isHidden = true
+        isHiddenAnswer = true
         onShowAnswerButton()
         layoutOpts.visibility = View.GONE
+        isHiddenOptions = false
     }
 
     private fun onShowAnswerButton() {
-        if(isHidden){
+        if(isHiddenAnswer){
             btnShowKey.text = "Hiển thị đáp án"
         } else{
             btnShowKey.text = "Ẩn đáp án"
         }
         btnShowKey.setOnClickListener {
-            if(isHidden){
+            if(isHiddenAnswer){
                 word.text = showWord
                 btnShowKey.text = "Ẩn đáp án"
+                if (!isHiddenOptions) layoutOpts.visibility = View.VISIBLE
                 layoutAnswer.visibility = View.VISIBLE
-                isHidden = false
-                layoutOpts.visibility = View.VISIBLE
+                isHiddenAnswer = false
+
             } else{
                 word.text = hiddenWord
                 btnShowKey.text = "Hiển thị đáp án"
                 layoutAnswer.visibility = View.GONE
-                isHidden = true
+                layoutOpts.visibility = View.GONE
+                isHiddenAnswer = true
             }
         }
     }
 
-    private fun handleButtonClick(clicked: Button, other1: Button, other2: Button, other3: Button, other4: Button) {
-        clicked.isEnabled = false
-        other1.isEnabled = true
-        other2.isEnabled = true
-        other3.isEnabled = true
-        other4.isEnabled = true
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

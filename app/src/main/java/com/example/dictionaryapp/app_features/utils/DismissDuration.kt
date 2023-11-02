@@ -12,5 +12,5 @@ enum class DismissDuration(val durationInMinutes: Long) {
     ONE_MONTH(43200),
     THREE_MONTHS(129600),
     FIVE_MONTHS(216000),
-    ONE_YEAR(518400)
+    ONE_YEAR(525600)
 }

@@ -6,17 +6,17 @@ import com.example.dictionaryapp.app_features.domain.model.Meaning
 import com.example.dictionaryapp.app_features.domain.model.WordInfo
 import com.example.dictionaryapp.app_features.utils.DismissDuration
 
-@Entity
+@Entity(tableName = "word-table")
 data class WordInfoEntity(
-    val word: String,
-    val phonetic: String,
-    val origin: String,
-    val meanings: List<Meaning>,
-    val isUsed: Boolean? = false,
-    val dismissDuration: DismissDuration? = null,
-    val skippedTimes: Int? = 0,
-    val illustration: String? = "",
-    @PrimaryKey val id: Int? = null
+    var word: String,
+    var phonetic: String,
+    var origin: String,
+    var meanings: List<Meaning>,
+    var isUsed: Boolean? = false,
+    var dismissDuration: DismissDuration? = null,
+    var isSkipped: Byte? = 0,
+    var illustration: String? = "",
+    @PrimaryKey(autoGenerate = true) val id: String
 ) {
     fun toWordInfo(): WordInfo {
         return WordInfo(
@@ -26,8 +26,18 @@ data class WordInfoEntity(
             origin = origin,
             isUsed = isUsed,
             dismissDuration = dismissDuration,
-            skippedTimes = skippedTimes,
+            isSkipped = isSkipped,
             illustration = illustration
+        )
+    }
+
+    fun toHistory(): HistoryEntity{
+        return HistoryEntity(
+            id = id,
+            word = word,
+            meaning = meanings,
+            isSkipped = isSkipped,
+            phonetic = phonetic
         )
     }
 }
