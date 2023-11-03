@@ -12,3 +12,5 @@ data class WordInfo(
     var isSkipped: Byte? = 0, //biến kiểm tra số lần người dùng skip theo đó sẽ điều chỉnh opts chọn time skip
     var illustration: String? = "" //url ảnh
 )
+
+class InvalidWordException(message: String): Exception(message)

@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+    def room_version = "2.6.0"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -80,7 +81,10 @@ dependencies {
     implementation 'com.github.st235:expandablebottombar:1.5.3'
 
     // Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:2.5.2"
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt "androidx.room:room-compiler:$room_version"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
 
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

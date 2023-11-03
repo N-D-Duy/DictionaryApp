@@ -6,13 +6,15 @@ import androidx.lifecycle.ViewModel
 import com.example.dictionaryapp.app_features.domain.model.Definition
 import com.example.dictionaryapp.app_features.domain.model.Meaning
 import com.example.dictionaryapp.app_features.domain.model.WordInfo
-import com.example.dictionaryapp.app_features.domain.use_case.GetWordInfo
+import com.example.dictionaryapp.app_features.domain.use_case.WordUseCases
 import com.example.dictionaryapp.app_features.utils.DismissDuration
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel@Inject constructor(
+    private val useCases: WordUseCases
+): ViewModel() {
 
     private val _text = MutableLiveData<List<WordInfo>>().apply {
         val def1 = Definition(definition = "Tội Phạm")

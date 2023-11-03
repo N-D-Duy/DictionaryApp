@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.app_features.domain.use_case
+package com.example.dictionaryapp.app_features.domain.use_case.cases
 
 import com.example.dictionaryapp.app_features.domain.repository.WordInfoRepository
 import com.example.dictionaryapp.app_features.domain.model.WordInfo

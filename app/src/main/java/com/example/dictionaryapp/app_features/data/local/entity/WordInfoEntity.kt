@@ -16,7 +16,7 @@ data class WordInfoEntity(
     var dismissDuration: DismissDuration? = null,
     var isSkipped: Byte? = 0,
     var illustration: String? = "",
-    @PrimaryKey(autoGenerate = true) val id: String
+    @PrimaryKey val id: String
 ) {
     fun toWordInfo(): WordInfo {
         return WordInfo(

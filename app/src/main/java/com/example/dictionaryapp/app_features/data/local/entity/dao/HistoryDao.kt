@@ -11,7 +11,10 @@ import com.example.dictionaryapp.app_features.data.local.entity.WordInfoEntity
 @Dao
 interface HistoryDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWords(info: List<WordInfoEntity>)
+    suspend fun insertWords(words: List<HistoryEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertWord(word: HistoryEntity)
 
     @Query("DELETE FROM `history-table` WHERE word IN(:words)")
     suspend fun deleteWordInfo(words: List<String>)
@@ -21,6 +24,9 @@ interface HistoryDao{
 
     @Update
     fun updateWords(words: List<HistoryEntity>)
+
+    @Query("SELECT * FROM `history-table`")
+    fun getAllWord(): List<HistoryEntity>
 
     @Query("SELECT * FROM `history-table` WHERE isSkipped")
     fun getWordSkipped(): List<HistoryEntity>

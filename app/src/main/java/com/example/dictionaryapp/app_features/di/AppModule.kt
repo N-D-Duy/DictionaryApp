@@ -1,19 +1,24 @@
 package com.example.dictionaryapp.app_features.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.example.dictionaryapp.app_features.data.local.Converters
 import com.example.dictionaryapp.app_features.data.local.WordInfoDatabase
-import com.example.dictionaryapp.app_features.data.local.entity.dao.HistoryDao
 import com.example.dictionaryapp.app_features.data.remote.DictionaryApi
 import com.example.dictionaryapp.app_features.data.repository.WordInfoRepositoryImpl
 import com.example.dictionaryapp.app_features.domain.repository.WordInfoRepository
-import com.example.dictionaryapp.app_features.domain.use_case.GetWordInfo
+import com.example.dictionaryapp.app_features.domain.use_case.WordUseCases
+import com.example.dictionaryapp.app_features.domain.use_case.cases.GetWordHistory
+import com.example.dictionaryapp.app_features.domain.use_case.cases.GetWordInfo
+import com.example.dictionaryapp.app_features.domain.use_case.cases.InsertHistoryWord
+import com.example.dictionaryapp.app_features.domain.use_case.cases.InsertWord
 import com.example.dictionaryapp.app_features.utils.GsonParser
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -25,8 +30,13 @@ object WordInfoModule {
 
     @Provides
     @Singleton
-    fun provideGetWordInfoUseCase(repository: WordInfoRepository): GetWordInfo {
-        return GetWordInfo(repository)
+    fun provideWordUseCase(repository: WordInfoRepository): WordUseCases {
+        return WordUseCases(
+            getWordInfo = GetWordInfo(repository),
+            getWordHistory = GetWordHistory(repository),
+            insertHistoryWord = InsertHistoryWord(repository),
+            insertWord = InsertWord(repository)
+        )
     }
 
     @Provides
@@ -40,9 +50,9 @@ object WordInfoModule {
 
     @Provides
     @Singleton
-    fun provideWordInfoDatabase(app: Application): WordInfoDatabase {
+    fun provideWordInfoDatabase(@ApplicationContext context: Context): WordInfoDatabase {
         return Room.databaseBuilder(
-            app, WordInfoDatabase::class.java, "word_db"
+            context, WordInfoDatabase::class.java, "word_db"
         ).addTypeConverter(Converters(GsonParser(Gson())))
             .build()
     }

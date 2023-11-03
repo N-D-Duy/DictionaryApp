@@ -11,8 +11,10 @@ import com.example.dictionaryapp.app_features.data.local.entity.WordInfoEntity
 interface WordInfoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWordInfo(infos: List<WordInfoEntity>)
+    suspend fun insertWords(words: WordInfoEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertWord(word: WordInfoEntity)
     @Query("DELETE FROM `word-table` WHERE word IN(:words)")
     suspend fun deleteWordInfo(words: List<String>)
 
@@ -21,6 +23,10 @@ interface WordInfoDao {
 
     @Query("SELECT * FROM `word-table` WHERE isUsed = 0 ORDER BY RANDOM() LIMIT 20")
     fun fetchRandomUnusedWords(): List<WordInfoEntity>
+
+    @Query("SELECT * FROM `word-table`")
+    fun getAllWord(): List<WordInfoEntity>
+
 
     @Update
     fun updateWords(words: List<WordInfoEntity>)
