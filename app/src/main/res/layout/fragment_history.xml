@@ -6,49 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".app_features.presentation.history.HistoryFragment">
 
-    <TextView
-        android:id="@+id/text_notifications"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_phonetic" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <EditText
+            android:id="@+id/edt_word"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="word"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <EditText
+            android:id="@+id/edt_meaning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="meaning"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_word" />
 
-    <EditText
-        android:id="@+id/edt_word"
-        android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/edt_phonetic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="phonetic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_meaning" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_insert"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="word"
+        app:layout_constraintStart_toEndOf="@id/btn_get"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/layout_test"
+        android:text="Insert"/>
 
-    <EditText
-        android:id="@+id/edt_meaning"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_get"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
-        android:hint="meaning"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_word" />
-
-    <EditText
-        android:id="@+id/edt_phonetic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="phonetic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_meaning" />
+        app:layout_constraintTop_toBottomOf="@id/layout_test"
+        app:layout_constraintEnd_toStartOf="@id/btn_insert"
+        android:text="get"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

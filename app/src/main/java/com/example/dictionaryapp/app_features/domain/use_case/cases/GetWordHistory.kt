@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.flow
 class GetWordHistory(
     private val repository: WordInfoRepository
 ) {
-    operator fun invoke(word: String): Flow<Resource<List<WordInfo>>> {
+    operator fun invoke(word: String): Flow<Resource<WordInfo>> {
         if(word.isBlank()) {
             return flow {
-                //return nothing if word got from repo is blank
+                //return nothing if input query is blank
             }
         }
         return repository.getHistoryWord(word)

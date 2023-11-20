@@ -52,7 +52,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/background_button_play"
-                android:src="@drawable/triangle_button_play"
+                android:src="@drawable/icon_stop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_word_hidden_phonetic" />

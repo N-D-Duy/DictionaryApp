@@ -27,32 +27,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object WordInfoModule {
-
     @Provides
     @Singleton
-    fun provideWordUseCase(repository: WordInfoRepository): WordUseCases {
-        return WordUseCases(
-            getWordInfo = GetWordInfo(repository),
-            getWordHistory = GetWordHistory(repository),
-            insertHistoryWord = InsertHistoryWord(repository),
-            insertWord = InsertWord(repository)
-        )
-    }
-
-    @Provides
-    @Singleton
-    fun provideWordInfoRepository(
-        api: DictionaryApi,
-        dao: WordInfoDatabase,
-    ): WordInfoRepository {
-        return WordInfoRepositoryImpl(api, dao)
-    }
-
-    @Provides
-    @Singleton
-    fun provideWordInfoDatabase(@ApplicationContext context: Context): WordInfoDatabase {
+    fun provideWordInfoDatabase(app: Application): WordInfoDatabase {
         return Room.databaseBuilder(
-            context, WordInfoDatabase::class.java, "word_db"
+            app,
+            WordInfoDatabase::class.java,
+            "word_db"
         ).addTypeConverter(Converters(GsonParser(Gson())))
             .build()
     }
@@ -65,5 +46,24 @@ object WordInfoModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(DictionaryApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWordInfoRepository(
+        api: DictionaryApi,
+        dao: WordInfoDatabase,
+    ): WordInfoRepository {
+        return WordInfoRepositoryImpl(api, dao)
+    }
+    @Provides
+    @Singleton
+    fun provideWordUseCase(repository: WordInfoRepository): WordUseCases {
+        return WordUseCases(
+            getWordInfo = GetWordInfo(repository),
+            getWordHistory = GetWordHistory(repository),
+            insertHistoryWord = InsertHistoryWord(repository),
+            insertWord = InsertWord(repository)
+        )
     }
 }

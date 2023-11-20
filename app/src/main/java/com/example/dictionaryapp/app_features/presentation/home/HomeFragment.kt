@@ -11,10 +11,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dictionaryapp.MainViewModel
+import com.example.dictionaryapp.R
 import com.example.dictionaryapp.app_features.domain.model.WordInfo
 import com.example.dictionaryapp.app_features.utils.DismissDuration
 import com.example.dictionaryapp.app_features.utils.optionsupport.ConvertTime
 import com.example.dictionaryapp.app_features.utils.optionsupport.OptionsAdapter
+import com.example.dictionaryapp.core_utils.text_to_speech.TTSListener
 import com.example.dictionaryapp.core_utils.wordsconverter.WordsConverterImpl
 import com.example.dictionaryapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,12 +31,14 @@ class HomeFragment : Fragment() {
     private val converter = WordsConverterImpl.getInstance()
     private var isHiddenAnswer = true
     private var isHiddenOptions = false
+    private var isPlaying = false
     private lateinit var hiddenWord: SpannableString
     private lateinit var showWord: SpannableString
     private val binding get() = _binding!!
     private val word get() = binding.tvWordOriginHidden
     private val meaning get() = binding.tvMeaningQuiz
     private val btnShowKey get() =  binding.btnShowKey
+    private val btnSound get() = binding.btnVoice
     private val layoutOpts get() = binding.layoutOpts
     private val layoutAnswer get() = binding.layoutAnswer
     private val rcvOptions get() = binding.rcvOptions
@@ -54,6 +58,7 @@ class HomeFragment : Fragment() {
     )
     private var listWord:List<WordInfo> = arrayListOf()
     private var currentIndex = 0
+    private lateinit var ttsListener: TTSListener
     private lateinit var homeViewModel: HomeViewModel
 
 
@@ -66,6 +71,12 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        //init
+        ttsListener = TTSListener(requireContext().applicationContext){
+            resetPlayingButton()
+        }
+        lifecycle.addObserver(ttsListener)
 
 
         //set adapter
@@ -111,9 +122,27 @@ class HomeFragment : Fragment() {
     }
 
     private fun onSoundButton() {
-        binding.btnVoice.setOnClickListener {
 
+        btnSound.setOnClickListener {
+            val currentWord = listWord[currentIndex]
+            Toast.makeText(requireContext().applicationContext, "current word: ${currentWord.word.toString()}", Toast.LENGTH_SHORT).show()
+            isPlaying = if(!isPlaying){
+                ttsListener.speak(currentWord.word.toString())
+                changeIconButtonPlay()
+                true
+            } else{
+                ttsListener.stop()
+                false
+            }
         }
+    }
+
+    private fun changeIconButtonPlay() {
+        btnSound.setImageResource(R.drawable.icon_playing)
+    }
+
+    private fun resetPlayingButton(){
+        btnSound.setImageResource(R.drawable.icon_stop)
     }
 
     private fun onNextButton() {
@@ -183,5 +212,6 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        lifecycle.removeObserver(ttsListener)
     }
 }

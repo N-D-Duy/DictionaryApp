@@ -24,11 +24,21 @@ class WordInfoRepositoryImpl (
         }
     }
 
-    override fun getHistoryWord(word: String): Flow<Resource<List<WordInfo>>> = flow{
+    override fun getHistoryWord(word: String): Flow<Resource<WordInfo>> = flow{
         emit(Resource.Loading())
         try{
-            val list = db.historyDao.getAllWord().map { it.toWordInfo() }
-            emit(Resource.Success(list))
+            val word = db.historyDao.getWordInfo(word = word).toWordInfo()
+            emit(Resource.Success(word))
+        } catch (e: Exception){
+            emit(Resource.Error(e.message.toString()))
+        }
+    }
+
+    override fun getAllHistory(): Flow<Resource<List<WordInfo>>> = flow{
+        emit(Resource.Loading())
+        try{
+            val history = db.historyDao.getAllWord().map { it.toWordInfo() }
+            emit(Resource.Success(history))
         } catch (e: Exception){
             emit(Resource.Error(e.message.toString()))
         }

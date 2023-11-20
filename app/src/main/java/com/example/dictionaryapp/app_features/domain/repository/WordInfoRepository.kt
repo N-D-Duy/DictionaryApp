@@ -9,7 +9,9 @@ import kotlinx.coroutines.flow.Flow
 interface WordInfoRepository {
     fun getWordInfo(word: String): Flow<Resource<List<WordInfo>>>
 
-    fun getHistoryWord(word: String): Flow<Resource<List<WordInfo>>>
+    fun getHistoryWord(word: String): Flow<Resource<WordInfo>>
+
+    fun getAllHistory(): Flow<Resource<List<WordInfo>>>
     fun insertWordToWordTable(word: WordInfoEntity): Flow<Resource<String>>
 
     fun insertWordToHistoryTable(word: HistoryEntity): Flow<Resource<String>>

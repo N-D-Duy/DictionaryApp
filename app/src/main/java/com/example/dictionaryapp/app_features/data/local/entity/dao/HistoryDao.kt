@@ -20,7 +20,7 @@ interface HistoryDao{
     suspend fun deleteWordInfo(words: List<String>)
 
     @Query("SELECT * FROM `history-table` WHERE word LIKE '%' || :word || '%'")
-    suspend fun getWordInfo(word: String): List<HistoryEntity>
+    suspend fun getWordInfo(word: String): HistoryEntity
 
     @Update
     fun updateWords(words: List<HistoryEntity>)
