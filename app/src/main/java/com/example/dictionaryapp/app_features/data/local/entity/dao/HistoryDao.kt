@@ -10,24 +10,32 @@ import com.example.dictionaryapp.app_features.data.local.entity.WordInfoEntity
 
 @Dao
 interface HistoryDao{
+
+    //insert
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWords(words: List<HistoryEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertWord(word: HistoryEntity)
 
+    //delete
     @Query("DELETE FROM `history-table` WHERE word IN(:words)")
     suspend fun deleteWordInfo(words: List<String>)
 
+
+    //get
     @Query("SELECT * FROM `history-table` WHERE word LIKE '%' || :word || '%'")
-    suspend fun getWordInfo(word: String): HistoryEntity
-
-    @Update
-    fun updateWords(words: List<HistoryEntity>)
-
+    suspend fun getAllWordLike(word: String): List<HistoryEntity>
+    @Query("SELECT * FROM `history-table` WHERE word like :word")
+    suspend fun getSingleWordInfo(word: String): HistoryEntity
     @Query("SELECT * FROM `history-table`")
-    fun getAllWord(): List<HistoryEntity>
+    suspend fun getAllWord(): List<HistoryEntity>
 
+
+    //update
+    @Update
+    suspend fun updateWords(words: List<HistoryEntity>)
     @Query("SELECT * FROM `history-table` WHERE isSkipped")
-    fun getWordSkipped(): List<HistoryEntity>
+    suspend fun getWordSkipped(): List<HistoryEntity>
+
 }

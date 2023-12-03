@@ -125,7 +125,6 @@ class HomeFragment : Fragment() {
 
         btnSound.setOnClickListener {
             val currentWord = listWord[currentIndex]
-            Toast.makeText(requireContext().applicationContext, "current word: ${currentWord.word.toString()}", Toast.LENGTH_SHORT).show()
             isPlaying = if(!isPlaying){
                 ttsListener.speak(currentWord.word.toString())
                 changeIconButtonPlay()

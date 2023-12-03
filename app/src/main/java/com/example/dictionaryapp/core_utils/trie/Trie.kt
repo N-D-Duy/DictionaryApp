@@ -1,7 +1,7 @@
 package com.example.dictionaryapp.core_utils.trie
 
 import com.example.dictionaryapp.app_features.domain.model.WordInfo
-import com.example.dictionaryapp.app_features.presentation.WordState
+import com.example.dictionaryapp.app_features.presentation.state.WordState
 
 class Trie<Key> {
     // root of a Trie always has the `key` and `parent` as null.
@@ -33,11 +33,11 @@ class Trie<Key> {
     fun contains(list: List<Key>): WordState {
         var current = root
         list.forEach { element ->
-            val child = current.children[element] ?: return WordState(isContained = false)
+            val child = current.children[element] ?: return WordState.SingleWordState(isContained = false)
             current = child
         }
 
-        return WordState(current.wordInfo, isContained = current.isValidWord)
+        return WordState.SingleWordState(current.wordInfo, isContained = current.isValidWord)
     }
 
     /**

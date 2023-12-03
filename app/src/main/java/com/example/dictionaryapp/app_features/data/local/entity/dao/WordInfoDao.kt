@@ -10,25 +10,32 @@ import com.example.dictionaryapp.app_features.data.local.entity.WordInfoEntity
 @Dao
 interface WordInfoDao {
 
+    //insert
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWords(words: WordInfoEntity)
+    suspend fun insertWords(words: List<WordInfoEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWord(word: WordInfoEntity)
+
+    //delete
     @Query("DELETE FROM `word-table` WHERE word IN(:words)")
     suspend fun deleteWordInfo(words: List<String>)
 
+    //get
     @Query("SELECT * FROM `word-table` WHERE word LIKE '%' || :word || '%'")
-    suspend fun getWordInfo(word: String): List<WordInfoEntity>
+    suspend fun getWordInfoLike(word: String): List<WordInfoEntity>
+    @Query("SELECT * FROM `word-table` WHERE word like :word")
+    suspend fun getSingleWordInfo(word: String): WordInfoEntity
+    @Query("SELECT * FROM `word-table`")
+    suspend fun getAllWord(): List<WordInfoEntity>
 
     @Query("SELECT * FROM `word-table` WHERE isUsed = 0 ORDER BY RANDOM() LIMIT 20")
-    fun fetchRandomUnusedWords(): List<WordInfoEntity>
-
-    @Query("SELECT * FROM `word-table`")
-    fun getAllWord(): List<WordInfoEntity>
+    suspend fun fetchRandomUnusedWords(): List<WordInfoEntity>
 
 
+
+    //update
     @Update
-    fun updateWords(words: List<WordInfoEntity>)
+    suspend fun updateWords(words: List<WordInfoEntity>)
 
 }

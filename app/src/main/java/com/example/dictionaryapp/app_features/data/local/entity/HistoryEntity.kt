@@ -7,8 +7,8 @@ import com.example.dictionaryapp.app_features.domain.model.WordInfo
 
 @Entity(tableName = "history-table")
 data class HistoryEntity(
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     var word:String,
     var meaning: List<Meaning>,
     var isSkipped: Byte? = 0,
