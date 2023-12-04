@@ -10,7 +10,7 @@ import com.example.dictionaryapp.app_features.data.local.entity.dao.WordInfoDao
 
 @Database(
     entities = [WordInfoEntity::class, HistoryEntity::class],
-    version = 2
+    version = 4
 )
 @TypeConverters(Converters::class)
 abstract class WordInfoDatabase: RoomDatabase() {

@@ -31,22 +31,6 @@ class HomeViewModel @Inject constructor(
     private val useCases: WordUseCases
 ) : ViewModel() {
 
-    private val _text = MutableLiveData<List<WordInfo>>().apply {
-        val def1 = Definition(definition = "Tội Phạm")
-        val def2 = Definition(definition = "Sách")
-        val def3 = Definition(definition = "Con Ruồi")
-
-        val mean1 = Meaning(arrayListOf(def1))
-        val mean2 = Meaning(arrayListOf(def2))
-        val mean3 = Meaning(arrayListOf(def3))
-
-        val word1 = WordInfo(word = "Crime", meanings = arrayListOf(mean1), dismissDuration = DismissDuration.FIVE_MINUTES)
-        val word2 = WordInfo(word = "Book", meanings = arrayListOf(mean2), dismissDuration = DismissDuration.ONE_MINUTE)
-        val word3 = WordInfo(word = "FlyCar", meanings = arrayListOf(mean3), dismissDuration = DismissDuration.THIRTY_MINUTES)
-        value = arrayListOf(word1, word2, word3)
-    }
-    val text: LiveData<List<WordInfo>> = _text
-
     private var _singleWordState = MutableStateFlow(WordState.SingleWordState())
     val singleWordState = _singleWordState.asStateFlow()
 
@@ -60,8 +44,8 @@ class HomeViewModel @Inject constructor(
 
     fun getWordInfoLike(query: String) {
         job?.cancel()
-        job = viewModelScope.launch {
-            useCases.getWordInfoLikeFromWordTable(query).onEach { result ->
+        job = viewModelScope.launch(Dispatchers.IO) {
+            useCases.getWordInfoLikeFromWordTable(query).collectLatest { result ->
                 when (result) {
                     is Resource.Loading -> {
                         _multipleWordsState.value = multipleWordsState.value.copy(
@@ -90,7 +74,7 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                 }
-            }.launchIn(viewModelScope)
+            }
         }
     }
 

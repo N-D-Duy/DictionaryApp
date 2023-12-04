@@ -7,6 +7,7 @@ import com.example.dictionaryapp.app_features.data.local.entity.HistoryEntity
 import com.example.dictionaryapp.app_features.domain.use_case.WordUseCases
 import com.example.dictionaryapp.app_features.presentation.state.WordState
 import com.example.dictionaryapp.core_utils.Resource
+import com.example.dictionaryapp.core_utils.download_words.DownloadWords
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -23,7 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val useCases: WordUseCases
+    private val useCases: WordUseCases,
+    private val downloadWords: DownloadWords
 ) : ViewModel() {
     private var _singleWordState = MutableStateFlow(WordState.SingleWordState())
     val singleWordState = _singleWordState.asStateFlow()
@@ -265,6 +267,13 @@ class HistoryViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun downLoadMoreWord(){
+        job?.cancel()
+        job = viewModelScope.launch(Dispatchers.IO) {
+            downloadWords.downloadWordsToLocal()
         }
     }
 

@@ -9,6 +9,8 @@ import com.example.dictionaryapp.app_features.domain.repository.Repository
 import com.example.dictionaryapp.core_utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
+import java.io.IOException
 
 class RepositoryImpl(
     private val api: DictionaryApi,
@@ -17,18 +19,36 @@ class RepositoryImpl(
     override suspend fun getWordInfoLikeFromWordTable(query: String): Flow<Resource<List<WordInfo>>> =
         flow {
             emit(Resource.Loading())
-            val word = db.wordDao.getWordInfoLike(word = query).map { it.toWordInfo() }
-            emit(Resource.Loading(data = word))
+
+            // Kiểm tra xem có dữ liệu local hay không
+            val localWordInfos = db.wordDao.getWordInfoLike(word = query).map { it.toWordInfo() }
+            if (localWordInfos.isNotEmpty()) {
+                emit(Resource.Success(localWordInfos))
+                return@flow
+            }
+
             try {
-                val wordSuccess = db.wordDao.getWordInfoLike(word = query).map { it.toWordInfo() }
-                emit(Resource.Success(wordSuccess))
-            } catch (e: Exception) {
-                emit(
-                    Resource.Error(
-                        message = "Oops, something went wrong!",
-                        data = word
-                    )
-                )
+                // Lấy dữ liệu từ xa
+                val remoteWordInfos = api.getWordInfo(word = query).map{ it.toWordInfoEntity()}
+
+                // Xóa dữ liệu cũ và chèn dữ liệu mới vào local
+                db.wordDao.deleteWordInfo(remoteWordInfos.map { it.word })
+                db.wordDao.insertWords(remoteWordInfos)
+
+                // Lấy dữ liệu mới từ local
+                val newWordInfos = db.wordDao.getWordInfoLike(word = query).map { it.toWordInfo() }
+                emit(Resource.Success(newWordInfos))
+
+            } catch (e: HttpException) {
+                emit(Resource.Error(
+                    message = "Oops, something went wrong!",
+                    data = emptyList()
+                ))
+            } catch (e: IOException) {
+                emit(Resource.Error(
+                    message = "Couldn't reach the server, check your internet connection.",
+                    data = emptyList()
+                ))
             }
         }
 

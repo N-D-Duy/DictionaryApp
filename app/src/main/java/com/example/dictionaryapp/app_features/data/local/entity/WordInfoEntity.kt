@@ -8,15 +8,16 @@ import com.example.dictionaryapp.app_features.utils.DismissDuration
 
 @Entity(tableName = "word-table")
 data class WordInfoEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     var word: String,
-    var phonetic: String,
-    var origin: String,
+    var phonetic: String? = "",
+    var origin: String? = "",
     var meanings: List<Meaning>,
     var isUsed: Boolean? = false,
     var dismissDuration: DismissDuration? = null,
     var isSkipped: Byte? = 0,
-    var illustration: String? = "",
-    @PrimaryKey val id: Int
+    var illustration: String? = ""
 ) {
     fun toWordInfo(): WordInfo {
         return WordInfo(

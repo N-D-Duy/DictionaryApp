@@ -8,8 +8,19 @@
     tools:context=".app_features.presentation.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_home_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/home_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_hidden_word"
@@ -25,13 +36,17 @@
                 android:layout_height="wrap_content"
                 android:text="@string/word_origin"
                 android:textColor="#E8350F"
+                android:maxLines="1"
                 android:textSize="90sp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeStepGranularity="2sp"
+                android:autoSizeMinTextSize="50sp"
+                android:autoSizeMaxTextSize="90sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/tv_word_hidden_phonetic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/tv_word_hidden_phonetic"
                 android:layout_width="wrap_content"

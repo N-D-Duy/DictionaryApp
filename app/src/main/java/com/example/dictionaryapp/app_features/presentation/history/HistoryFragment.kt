@@ -37,6 +37,7 @@ class HistoryFragment : Fragment() {
     private val edtPhonetic get() = binding.edtPhonetic
     private val edtMeaning get() = binding.edtMeaning
     private var isClickBtnGet = false
+    private val btnDownload get() = binding.btnDownload
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,13 +82,16 @@ class HistoryFragment : Fragment() {
                     ).show()
                 }
             }
-
         }
 
         btnGet.setOnClickListener {
             val word = edtWord.text.toString().trim()
             historyViewModel.getHistoryWord(word)
             isClickBtnGet = true
+        }
+
+        btnDownload.setOnClickListener {
+            historyViewModel.downLoadMoreWord()
         }
         return root
     }

@@ -15,7 +15,7 @@ interface HistoryDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWords(words: List<HistoryEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWord(word: HistoryEntity)
 
     //delete
