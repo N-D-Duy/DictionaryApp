@@ -12,7 +12,7 @@ data class HistoryEntity(
     val id: Int,
     var word:String,
     var meaning: List<Meaning>,
-    var isSkipped: Byte? = 0,
+    var isSkipped: Byte = 0,
     var dismissDuration: DismissDuration? = null,
     var expiredTime: Long? = null, //thời gian hết hạn
     var phonetic:String? = ""

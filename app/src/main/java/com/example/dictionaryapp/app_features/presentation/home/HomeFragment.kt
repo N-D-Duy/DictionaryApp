@@ -151,7 +151,7 @@ class HomeFragment : Fragment() {
         hiddenWord = res.first
         showWord = converter.revealHiddenChars(
             res.first,
-            listWord[currentWordIndex].word.toString(),
+            listWord[currentWordIndex].word,
             res.second
         )
         tvPhonetic.text = listWord[currentWordIndex].phonetic.toString()
@@ -186,7 +186,7 @@ class HomeFragment : Fragment() {
         btnSound.setOnClickListener {
             val currentWord = listWord[currentIndex]
             isPlaying = if (!isPlaying) {
-                ttsListener.speak(currentWord.word.toString())
+                ttsListener.speak(currentWord.word)
                 changeIconButtonPlay()
                 true
             } else {
@@ -219,10 +219,9 @@ class HomeFragment : Fragment() {
 
     //update UI
     private fun updateUI(index: Int) {
-        val res = converter.convertAndColor(listWord[index].word.toString())
+        val res = converter.convertAndColor(listWord[index].word)
         hiddenWord = res.first
-        showWord =
-            converter.revealHiddenChars(res.first, listWord[index].word.toString(), res.second)
+        showWord = converter.revealHiddenChars(res.first, listWord[index].word, res.second)
         word.text = hiddenWord
         tvPhonetic.text = listWord[index].phonetic.toString()
         meaning.text = listWord[index].meanings[0].definitions[0].definition.toString()

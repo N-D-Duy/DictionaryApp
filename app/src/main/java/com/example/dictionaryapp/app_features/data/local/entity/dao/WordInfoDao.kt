@@ -29,7 +29,7 @@ interface WordInfoDao {
     @Query("SELECT * FROM `word-table`")
     suspend fun getAllWord(): List<WordInfoEntity>
 
-    @Query("SELECT * FROM `word-table` WHERE isUsed = 0 ORDER BY RANDOM() LIMIT 20")
+    @Query("SELECT * FROM `word-table` WHERE isHistory = 0 ORDER BY RANDOM() LIMIT 20")
     suspend fun fetchRandomUnusedWords(): List<WordInfoEntity>
 
 

@@ -14,10 +14,10 @@ data class WordInfoEntity(
     var phonetic: String? = "",
     var origin: String? = "",
     var meanings: List<Meaning>,
-    var isUsed: Boolean? = false,
+    var isHistory: Boolean = false,
     var dismissDuration: DismissDuration? = null,
     var expiredTime: Long? = null, //thời gian hết hạn
-    var isSkipped: Byte? = 0,
+    var isSkipped: Byte = 0,
     var illustration: String? = ""
 ) {
     fun toWordInfo(): WordInfo {
@@ -26,7 +26,7 @@ data class WordInfoEntity(
             word = word, 
             phonetic = phonetic,
             origin = origin,
-            isUsed = isUsed,
+            isHistory = isHistory,
             dismissDuration = dismissDuration,
             expiredTime = expiredTime,
             isSkipped = isSkipped,

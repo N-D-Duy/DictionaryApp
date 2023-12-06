@@ -1,5 +1,6 @@
 package com.example.dictionaryapp.main
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dictionaryapp.app_features.domain.model.WordInfo
@@ -21,6 +22,7 @@ class MainViewModel@Inject constructor(
     private val useCases: WordUseCases
 ) : ViewModel(){
     var currentWordIndex: Int = 0
+    val sharedWord = MutableLiveData<WordInfo>()
 
     private val _listWord = MutableStateFlow(WordState.MultipleWordsState())
     var listWord = _listWord.asStateFlow()
@@ -56,6 +58,7 @@ class MainViewModel@Inject constructor(
                 }
             }
         }
-
     }
+
+
 }
