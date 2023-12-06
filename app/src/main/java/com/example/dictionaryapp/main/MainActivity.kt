@@ -1,15 +1,23 @@
-package com.example.dictionaryapp
+package com.example.dictionaryapp.main
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
+import com.example.dictionaryapp.R
 import com.example.dictionaryapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels()
@@ -23,13 +31,9 @@ class MainActivity : AppCompatActivity(){
         val navView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        /*val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_search, R.id.navigation_history
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)*/
-        ExpandableBottomBarNavigationUI.setupWithNavController(navView, navController)
-    }
 
+        ExpandableBottomBarNavigationUI.setupWithNavController(navView, navController)
+
+        mainViewModel.fetchRandomUnusedWords()
+    }
 }

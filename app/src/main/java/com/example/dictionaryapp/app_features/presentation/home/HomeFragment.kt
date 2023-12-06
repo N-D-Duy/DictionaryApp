@@ -12,11 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dictionaryapp.MainViewModel
+import com.example.dictionaryapp.main.MainViewModel
 import com.example.dictionaryapp.R
 import com.example.dictionaryapp.app_features.domain.model.WordInfo
 import com.example.dictionaryapp.app_features.utils.DismissDuration
@@ -29,7 +28,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.reflect.typeOf
 
 
 @AndroidEntryPoint
@@ -89,6 +87,8 @@ class HomeFragment : Fragment() {
         }
         lifecycle.addObserver(ttsListener)
 
+        currentIndex = activityViewModel.currentWordIndex
+
 
         //set adapter
         rcvOptions.layoutManager = LinearLayoutManager(
@@ -105,6 +105,10 @@ class HomeFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 isHiddenOptions = true
                 listWord[currentIndex].dismissDuration = items[position]
+                val currentTime = System.currentTimeMillis() //current time in long value
+                val endTime = currentTime + items[position].durationInMinutes * 60 * 1000
+                listWord[currentIndex].expiredTime = endTime
+                homeViewModel.updateWords(listOf(listWord[currentIndex].toWordEntity()!!))
                 layoutOpts.visibility = View.GONE
                 val time = ConvertTime(items[position].durationInMinutes).convertMinutesToTime()
                 Toast.makeText(context, "This word will not appear after $time", Toast.LENGTH_SHORT)
@@ -112,7 +116,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        requireActivity().collectLatestLifecycleFlow(homeViewModel.multipleWordsState) {
+        requireActivity().collectLatestLifecycleFlow(activityViewModel.listWord) {
             if (it.isLoading) {
                 UIEvent.ShowSnackBar("Loading...")
                 progressBar.visibility = View.VISIBLE
@@ -143,7 +147,7 @@ class HomeFragment : Fragment() {
 
     private fun initialSetting() {
         val currentWordIndex = activityViewModel.currentWordIndex
-        val res = converter.convertAndColor(listWord[currentWordIndex].word.toString())
+        val res = converter.convertAndColor(listWord[currentWordIndex].word)
         hiddenWord = res.first
         showWord = converter.revealHiddenChars(
             res.first,

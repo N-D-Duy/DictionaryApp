@@ -16,6 +16,7 @@ data class WordInfoEntity(
     var meanings: List<Meaning>,
     var isUsed: Boolean? = false,
     var dismissDuration: DismissDuration? = null,
+    var expiredTime: Long? = null, //thời gian hết hạn
     var isSkipped: Byte? = 0,
     var illustration: String? = ""
 ) {
@@ -27,6 +28,7 @@ data class WordInfoEntity(
             origin = origin,
             isUsed = isUsed,
             dismissDuration = dismissDuration,
+            expiredTime = expiredTime,
             isSkipped = isSkipped,
             illustration = illustration
         )

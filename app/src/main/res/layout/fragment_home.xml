@@ -60,7 +60,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_word_origin_hidden" />
 
-
             <ImageButton
                 android:id="@+id/btn_voice"
                 android:layout_width="40dp"
