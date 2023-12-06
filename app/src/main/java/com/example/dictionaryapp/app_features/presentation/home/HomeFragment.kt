@@ -124,7 +124,13 @@ class HomeFragment : Fragment() {
                 listWord = it.wordList ?: emptyList()
             }
             if (listWord.isNotEmpty()) {
+                progressBar.visibility = View.GONE
+                layoutMain.visibility = View.VISIBLE
                 initialSetting()
+            }else{
+                UIEvent.ShowSnackBar("Loading...")
+                progressBar.visibility = View.VISIBLE
+                layoutMain.visibility = View.GONE
             }
         }
 
