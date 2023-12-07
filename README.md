@@ -2,9 +2,9 @@
 
 ![app_icon](https://github.com/N-D-Duy/DictionaryApp/assets/106760291/7397f6d5-b744-4867-a14d-678681ca02a3)
 
-![home_screen](https://github.com/N-D-Duy/DictionaryApp/assets/106760291/53e94fe7-2897-49c2-9d82-ecd4472fff3d)
+![search](https://github.com/N-D-Duy/DictionaryApp/assets/106760291/be241b46-fc40-4b97-9226-1b38ae80d2a8)
 
-![search_screen](https://github.com/N-D-Duy/DictionaryApp/assets/106760291/0de79675-579b-4f89-9b3e-df3fd8e53ed1)
+![home](https://github.com/N-D-Duy/DictionaryApp/assets/106760291/87b95602-b9aa-46f2-9efa-93a80488862e)
 
 a small quiz app + dictionary using clean architechture + kotlin coroutines
 
