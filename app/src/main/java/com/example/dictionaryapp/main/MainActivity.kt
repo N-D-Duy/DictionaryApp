@@ -1,6 +1,7 @@
 package com.example.dictionaryapp.main
 
 import android.os.Bundle
+import android.window.OnBackInvokedDispatcher
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +32,13 @@ class MainActivity : AppCompatActivity() {
         val navView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
+        val actionBar = supportActionBar
+
         ExpandableBottomBarNavigationUI.setupWithNavController(navView, navController)
         mainViewModel.fetchRandomUnusedWords()
+    }
+
+    override fun getOnBackInvokedDispatcher(): OnBackInvokedDispatcher {
+        return super.getOnBackInvokedDispatcher()
     }
 }

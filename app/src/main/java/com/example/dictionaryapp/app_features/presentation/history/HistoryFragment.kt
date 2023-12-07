@@ -63,7 +63,7 @@ class HistoryFragment : Fragment() {
             historyViewModel.insertHistory(wordInfo)
         }
 
-        //collect data
+        /*//collect data
         requireActivity().collectLatestLifecycleFlow(historyViewModel.singleWordState) {
             if (isClickBtnGet) {
                 val wordInfo = it.wordInfo
@@ -88,7 +88,7 @@ class HistoryFragment : Fragment() {
             val word = edtWord.text.toString().trim()
             historyViewModel.getHistoryWord(word)
             isClickBtnGet = true
-        }
+        }*/
 
         btnDownload.setOnClickListener {
             historyViewModel.downLoadMoreWord()

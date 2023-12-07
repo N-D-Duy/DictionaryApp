@@ -1,6 +1,8 @@
 package com.example.dictionaryapp.app_features.utils
 
-enum class DismissDuration(val durationInMinutes: Long) {
+import java.io.Serializable
+
+enum class DismissDuration(val durationInMinutes: Long): Serializable {
     ONE_MINUTE(1),
     FIVE_MINUTES(5),
     TEN_MINUTES(10),

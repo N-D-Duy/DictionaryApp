@@ -10,4 +10,6 @@
     <string name="meaning_quiz">Tội phạm, Tội ác, Tội lỗi, Tội phạm, Tội ác, Tội lỗi,. Tội phạm, Tội ác, Tội lỗi, Tội phạm, Tội ác, Tội lỗi,Tội phạm, Tội ác, Tội lỗi,Tội phạm, Tội ác, Tội lỗi</string>
     <string name="forward_arrow_description">next</string>
     <string name="back_arrow_description">previous</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

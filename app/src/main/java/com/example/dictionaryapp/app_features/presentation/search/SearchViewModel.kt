@@ -1,12 +1,11 @@
 package com.example.dictionaryapp.app_features.presentation.search
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dictionaryapp.app_features.data.local.entity.WordInfoEntity
 import com.example.dictionaryapp.app_features.domain.use_case.WordUseCases
+import com.example.dictionaryapp.app_features.presentation.state.SearchResult
 import com.example.dictionaryapp.core_utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

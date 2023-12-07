@@ -1,8 +1,10 @@
 package com.example.dictionaryapp.app_features.domain.model
 
+import android.os.Parcelable
 import com.example.dictionaryapp.app_features.data.local.entity.HistoryEntity
 import com.example.dictionaryapp.app_features.data.local.entity.WordInfoEntity
 import com.example.dictionaryapp.app_features.utils.DismissDuration
+import java.io.Serializable
 
 data class WordInfo(
     var word: String,
@@ -14,7 +16,8 @@ data class WordInfo(
     var expiredTime: Long? = null, //thời gian hết hạn
     var isSkipped: Byte = 0, //biến kiểm tra số lần người dùng skip theo đó sẽ điều chỉnh opts chọn time skip
     var illustration: String? = "" //url ảnh
-) {
+): Serializable {
+
     fun toWordEntity(): WordInfoEntity? {
         return WordInfoEntity(
             id = 0,

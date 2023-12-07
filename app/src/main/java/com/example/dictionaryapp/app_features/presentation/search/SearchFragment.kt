@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.ComponentActivity
+import androidx.compose.ui.input.key.Key.Companion.W
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -60,8 +61,7 @@ class SearchFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 //pass data to detail activity
                 val word = searchResult[position]
-                mainViewModel.sharedWord.value = word
-                startActivity(Intent(requireActivity().applicationContext, WordDetailActivity::class.java))
+
 
                 //update word is history
                 word.isHistory = true

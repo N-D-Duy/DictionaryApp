@@ -1,11 +1,10 @@
 package com.example.dictionaryapp.main
 
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dictionaryapp.app_features.domain.model.WordInfo
 import com.example.dictionaryapp.app_features.domain.use_case.WordUseCases
-import com.example.dictionaryapp.app_features.presentation.home.UIEvent
 import com.example.dictionaryapp.app_features.presentation.state.WordState
 import com.example.dictionaryapp.core_utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,11 +17,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel@Inject constructor(
+class MainViewModel @Inject constructor(
     private val useCases: WordUseCases
-) : ViewModel(){
+) : ViewModel() {
     var currentWordIndex: Int = 0
-    val sharedWord = MutableLiveData<WordInfo>()
 
     private val _listWord = MutableStateFlow(WordState.MultipleWordsState())
     var listWord = _listWord.asStateFlow()
@@ -59,6 +57,5 @@ class MainViewModel@Inject constructor(
             }
         }
     }
-
 
 }
