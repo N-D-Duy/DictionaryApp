@@ -15,7 +15,7 @@
         android:id="@+id/navigation_search"
         android:name="com.example.dictionaryapp.app_features.presentation.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
 
         <action
             android:id="@+id/action_navigation_search_to_fragmentDetail"
@@ -34,14 +34,11 @@
         tools:layout="@layout/fragment_history" />
     <fragment
         android:id="@+id/wordDetailFragment"
-        android:name="com.example.dictionaryapp.app_features.presentation.search.WordDetailFragment"
+        android:name="com.example.dictionaryapp.app_features.presentation.detail.WordDetailFragment"
         android:label="fragment_word_detail"
-        tools:layout="@layout/fragment_word_detail" >
-
+        tools:layout="@layout/fragment_word_detail">
         <argument
-            android:name="myArg"
+            android:name= "myArg"
             app:argType="com.example.dictionaryapp.app_features.domain.model.WordInfo" />
     </fragment>
-
-
 </navigation>

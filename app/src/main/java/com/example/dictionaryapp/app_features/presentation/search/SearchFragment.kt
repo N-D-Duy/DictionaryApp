@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation
 import com.example.dictionaryapp.app_features.domain.model.WordInfo
 import com.example.dictionaryapp.databinding.FragmentSearchBinding
 import com.example.dictionaryapp.main.MainViewModel
@@ -61,7 +62,8 @@ class SearchFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 //pass data to detail activity
                 val word = searchResult[position]
-
+                val action = SearchFragmentDirections.actionNavigationSearchToFragmentDetail(word)
+                Navigation.findNavController(binding.root).navigate(action)
 
                 //update word is history
                 word.isHistory = true
@@ -76,7 +78,7 @@ class SearchFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                searchViewModel.searchWord(p0.toString())
+                searchViewModel.searchWord(p0.toString().trim())
                 rcvContainer.visibility = View.VISIBLE
                 Log.e("TAG", "onTextChanged: ")
 
@@ -100,7 +102,7 @@ class SearchFragment : Fragment() {
 
             override fun afterTextChanged(p0: Editable?) {
                 rcvContainer.visibility = View.VISIBLE
-                if(p0.toString().isEmpty()) {
+                if(p0.toString().trim().isEmpty()) {
                     rcvContainer.visibility = View.INVISIBLE
                 }
             }
