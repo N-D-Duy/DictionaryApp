@@ -32,10 +32,8 @@ interface WordInfoDao {
     @Query("SELECT * FROM `word-table` WHERE isHistory = 0 ORDER BY RANDOM() LIMIT 20")
     suspend fun fetchRandomUnusedWords(): List<WordInfoEntity>
 
-
-
     //update
     @Update
-    suspend fun updateWords(words: List<WordInfoEntity>)
+    suspend fun updateWord(word: WordInfoEntity)
 
 }

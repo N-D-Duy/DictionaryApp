@@ -25,7 +25,7 @@ data class WordUseCases(
     val insertWordToWordTable: InsertSingleWordToWordTable,
     val insertWordsToWordTable: InsertWordsToWordTable,
     val deleteWordFromWordTable: DeleteWordFromWordTable,
-    val updateWordsToWordTable: UpdateWordFromWordTable,
+    val updateWordToWordTable: UpdateWordFromWordTable,
     val fetchRandomUnusedWordsFromWordTable: GetRandomUnusedWordsFromWordTable,
 
 

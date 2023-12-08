@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.flow
 class UpdateWordFromWordTable(
     private val repository: Repository
 ) {
-    suspend operator fun invoke(words: List<WordInfoEntity>): Flow<Resource<String>> {
-        if (words.isEmpty()) {
+    suspend operator fun invoke(word: WordInfoEntity): Flow<Resource<String>> {
+        if (word.word.isEmpty()) {
             return flow {
-                throw Exception("List of words can't be empty")
+                throw Exception("this field can't be empty")
             }
         }
-        return repository.updateWordsToWordTable(words)
+        return repository.updateWordToWordTable(word)
     }
 }

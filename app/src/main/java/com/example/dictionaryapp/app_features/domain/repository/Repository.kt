@@ -20,7 +20,7 @@ interface Repository {
 
     suspend fun deleteWordFromWordTable(words: List<String>): Flow<Resource<String>>
 
-    suspend fun updateWordsToWordTable(words: List<WordInfoEntity>): Flow<Resource<String>>
+    suspend fun updateWordToWordTable(word: WordInfoEntity): Flow<Resource<String>>
 
     suspend fun fetchRandomUnusedWordsFromWordTable(): Flow<Resource<List<WordInfo>>>
 

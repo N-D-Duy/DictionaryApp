@@ -1,5 +1,6 @@
 package com.example.dictionaryapp.app_features.data.repository
 
+import android.util.Log
 import com.example.dictionaryapp.app_features.data.local.WordInfoDatabase
 import com.example.dictionaryapp.app_features.data.local.entity.HistoryEntity
 import com.example.dictionaryapp.app_features.data.local.entity.WordInfoEntity
@@ -7,6 +8,7 @@ import com.example.dictionaryapp.app_features.data.remote.DictionaryApi
 import com.example.dictionaryapp.app_features.domain.model.WordInfo
 import com.example.dictionaryapp.app_features.domain.repository.Repository
 import com.example.dictionaryapp.core_utils.Resource
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -19,36 +21,40 @@ class RepositoryImpl(
     override suspend fun getWordInfoLikeFromWordTable(query: String): Flow<Resource<List<WordInfo>>> =
         flow {
             emit(Resource.Loading())
-
             // Kiểm tra xem có dữ liệu local hay không
             val localWordInfos = db.wordDao.getWordInfoLike(word = query).map { it.toWordInfo() }
             if (localWordInfos.isNotEmpty()) {
                 emit(Resource.Success(localWordInfos))
                 return@flow
             }
-
             try {
                 // Lấy dữ liệu từ xa
-                val remoteWordInfos = api.getWordInfo(word = query).map{ it.toWordInfoEntity()}
+                val remoteWordInfos = api.getWordInfo(word = query).map { it.toWordInfoEntity() }
+                val remoteWord = remoteWordInfos.first()
+                Log.e("check", "getWordInfoLikeFromWordTable: $remoteWordInfos")
 
                 // Xóa dữ liệu cũ và chèn dữ liệu mới vào local
-                db.wordDao.deleteWordInfo(remoteWordInfos.map { it.word })
-                db.wordDao.insertWords(remoteWordInfos)
+                db.wordDao.deleteWordInfo(listOf( remoteWord.word))
+                db.wordDao.insertWord(remoteWord)
 
                 // Lấy dữ liệu mới từ local
                 val newWordInfos = db.wordDao.getWordInfoLike(word = query).map { it.toWordInfo() }
                 emit(Resource.Success(newWordInfos))
 
             } catch (e: HttpException) {
-                emit(Resource.Error(
-                    message = "Oops, something went wrong!",
-                    data = emptyList()
-                ))
+                emit(
+                    Resource.Error(
+                        message = "Oops, something went wrong!",
+                        data = emptyList()
+                    )
+                )
             } catch (e: IOException) {
-                emit(Resource.Error(
-                    message = "Couldn't reach the server, check your internet connection.",
-                    data = emptyList()
-                ))
+                emit(
+                    Resource.Error(
+                        message = "Couldn't reach the server, check your internet connection.",
+                        data = emptyList()
+                    )
+                )
             }
         }
 
@@ -137,11 +143,11 @@ class RepositoryImpl(
         }
     }
 
-    override suspend fun updateWordsToWordTable(words: List<WordInfoEntity>): Flow<Resource<String>> {
+    override suspend fun updateWordToWordTable(word: WordInfoEntity): Flow<Resource<String>> {
         return flow {
             emit(Resource.Loading())
             try {
-                db.wordDao.updateWords(words)
+                db.wordDao.updateWord(word)
                 emit(Resource.Success("Success"))
             } catch (e: Exception) {
                 emit(

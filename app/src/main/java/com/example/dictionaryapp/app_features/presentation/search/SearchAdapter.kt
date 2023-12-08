@@ -1,5 +1,6 @@
 package com.example.dictionaryapp.app_features.presentation.search
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,9 @@ class SearchAdapter(private var list: List<WordInfo>): RecyclerView.Adapter<Sear
         private val imageHistory = itemView.findViewById(R.id.img_history_search) as ImageView
         fun bind(wordInfo: WordInfo, listener: OnItemClickListener) {
             tvWord.text = wordInfo.word.trim()
+            if(wordInfo.word == "actually") {
+                Log.e("history: ", wordInfo.isHistory.toString())
+            }
             if(wordInfo.isHistory) {
                 imageHistory.visibility = View.VISIBLE
             } else {

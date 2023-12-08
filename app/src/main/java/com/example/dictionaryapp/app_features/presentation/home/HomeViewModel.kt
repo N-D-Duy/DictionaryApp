@@ -211,10 +211,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun updateWords(words: List<WordInfoEntity>) {
+    fun updateWord(word: WordInfoEntity) {
         job?.cancel()
         job = viewModelScope.launch(Dispatchers.IO) {
-            useCases.updateWordsToWordTable.invoke(words).collectLatest {
+            useCases.updateWordToWordTable.invoke(word).collectLatest {
                 //do something after update
                 when (it) {
                     is Resource.Loading -> {

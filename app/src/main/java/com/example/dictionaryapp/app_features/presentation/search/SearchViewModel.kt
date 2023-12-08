@@ -54,16 +54,15 @@ class SearchViewModel@Inject constructor(
         }
     }
 
-    fun updateWords(words: List<WordInfoEntity>) {
+    fun updateWord(word: WordInfoEntity) {
         searchJob?.cancel()
         searchJob = viewModelScope.launch(Dispatchers.IO) {
-            useCases.updateWordsToWordTable.invoke(words).collectLatest {
+            useCases.updateWordToWordTable.invoke(word).collectLatest {
                 //do something after update
                 when (it) {
                     is Resource.Loading -> {
                         Log.d("Update word", "Loading")
                     }
-
                     is Resource.Error -> {
                         Log.d("Update word", "Error: ${it.message}")
                     }

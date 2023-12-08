@@ -83,7 +83,7 @@ object WordInfoModule {
             insertWordToWordTable = InsertSingleWordToWordTable(repository),
             insertWordsToWordTable = InsertWordsToWordTable(repository),
             deleteWordFromWordTable = DeleteWordFromWordTable(repository),
-            updateWordsToWordTable = UpdateWordFromWordTable(repository),
+            updateWordToWordTable = UpdateWordFromWordTable(repository),
             fetchRandomUnusedWordsFromWordTable = GetRandomUnusedWordsFromWordTable(repository),
 
             getAllWordFromHistoryTable = GetAllWordFromHistoryTable(repository),

@@ -108,7 +108,7 @@ class HomeFragment : Fragment() {
                 val currentTime = System.currentTimeMillis() //current time in long value
                 val endTime = currentTime + items[position].durationInMinutes * 60 * 1000
                 listWord[currentIndex].expiredTime = endTime
-                homeViewModel.updateWords(listOf(listWord[currentIndex].toWordEntity()!!))
+                homeViewModel.updateWord(listWord[currentIndex].toWordEntity()!!)
                 layoutOpts.visibility = View.GONE
                 val time = ConvertTime(items[position].durationInMinutes).convertMinutesToTime()
                 Toast.makeText(context, "This word will not appear after $time", Toast.LENGTH_SHORT)

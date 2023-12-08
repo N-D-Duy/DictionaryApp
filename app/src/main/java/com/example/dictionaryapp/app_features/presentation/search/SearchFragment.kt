@@ -21,6 +21,8 @@ import com.example.dictionaryapp.app_features.domain.model.WordInfo
 import com.example.dictionaryapp.databinding.FragmentSearchBinding
 import com.example.dictionaryapp.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -42,6 +44,7 @@ class SearchFragment : Fragment() {
     private val rcvContainer get() = binding.rcvContainer
     private val rcvResult get() = binding.rcvSearch
     private var searchResult: List<WordInfo> = emptyList()
+    private var searchJob: Job? = null
 
 
     override fun onCreateView(
@@ -60,14 +63,15 @@ class SearchFragment : Fragment() {
         rcvResult.adapter = adapter
         adapter.setOnClickListener(object : SearchAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
-                //pass data to detail activity
                 val word = searchResult[position]
-                val action = SearchFragmentDirections.actionNavigationSearchToFragmentDetail(word)
-                Navigation.findNavController(binding.root).navigate(action)
-
                 //update word is history
                 word.isHistory = true
-                searchViewModel.updateWords(listOf(word.toWordEntity()!!))
+                searchViewModel.updateWord(word.toWordEntity()!!)
+                adapter.updateData(searchResult)
+
+                //pass data to detail activity
+                val action = SearchFragmentDirections.actionNavigationSearchToFragmentDetail(word)
+                Navigation.findNavController(binding.root).navigate(action)
             }
         })
 
@@ -76,12 +80,16 @@ class SearchFragment : Fragment() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 rcvContainer.visibility = View.VISIBLE
             }
-
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                searchViewModel.searchWord(p0.toString().trim())
+                searchJob?.cancel()
+                searchJob = lifecycleScope.launch {
+                    p0?.let {
+                        delay(300)
+                        searchViewModel.searchWord(p0.toString().trim())
+                        adapter.updateData(searchResult)
+                    }
+                }
                 rcvContainer.visibility = View.VISIBLE
-                Log.e("TAG", "onTextChanged: ")
-
                 // Thực hiện query và trả về kết quả
                 requireActivity().collectLatestLifecycleFlow(searchViewModel.result) { result ->
                     if (result.isLoading) {
@@ -96,11 +104,11 @@ class SearchFragment : Fragment() {
                         progressBar.visibility = View.GONE
                         adapter.updateData(searchResult)
                     }
-                    Log.e("result: ", searchResult.size.toString())
                 }
-            }
 
+            }
             override fun afterTextChanged(p0: Editable?) {
+                //if input is empty, hide rcv
                 rcvContainer.visibility = View.VISIBLE
                 if(p0.toString().trim().isEmpty()) {
                     rcvContainer.visibility = View.INVISIBLE

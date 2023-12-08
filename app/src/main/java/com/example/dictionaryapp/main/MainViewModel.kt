@@ -21,7 +21,6 @@ class MainViewModel @Inject constructor(
     private val useCases: WordUseCases
 ) : ViewModel() {
     var currentWordIndex: Int = 0
-
     private val _listWord = MutableStateFlow(WordState.MultipleWordsState())
     var listWord = _listWord.asStateFlow()
 
